@@ -35,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
         airtime = findViewById(R.id.ar);
         chimoney = findViewById(R.id.ch);
-       // new MyTask().execute();
-        final OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
 
         email = findViewById(R.id.editTextTextEmailAddress);
+
+        final OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
         airtime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             String val = getLocalAmt(client, "20");
-                            send_chimoney(client, val, email.toString());
+                            send_chimoney(val, email.toString());
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (JSONException e) {
@@ -102,13 +102,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void send_chimoney(OkHttpClient client, String amt, String email) throws IOException, JSONException {
+    public void send_chimoney(String amt, String email) throws IOException, JSONException {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
         MediaType mediaType = MediaType.parse("text/plain");
         RequestBody body = RequestBody.create(mediaType, "{\n    \"chimoneys\": [\n        {\n            \"email\": \""+email+"\",\n            \"valueInUSD\": "+amt+"\n        }");
         Request request = new Request.Builder()
                 .url("https://chimoney.io/api/v0.1/payouts/chimoney")
-               .method("POST", body)
-                .addHeader("X-API-Key", API_KEY_FROM_DEV_PORTAL)
+                .method("POST", body)
+                .addHeader("X-API-Key", "API_KEY_FROM_DEV_PORTAL")
                 .build();
         Response response = client.newCall(request).execute();
         String responseData = response.body().string();

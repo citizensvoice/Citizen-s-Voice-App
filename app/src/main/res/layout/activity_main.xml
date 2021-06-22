@@ -10,7 +10,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="19dp"
+        android:layout_marginBottom="40dp"
         android:text="You have 200 points which is equivalent to 200 naira!"
         android:textColor="@android:color/holo_blue_light"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -22,10 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="22dp"
         android:text="Redeem as airtime"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <Button
         android:id="@+id/ch"
@@ -36,18 +35,6 @@
         android:text="Redeem As Chimoney"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ar" />
-
-    <EditText
-        android:id="@+id/editTextTextEmailAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Please Enter Your Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.146"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -71,4 +58,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share"
+        app:layout_constraintTop_toTopOf="@+id/guideline21"
+        tools:layout_editor_absoluteX="186dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="466dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
