@@ -22,14 +22,12 @@ public class Login extends AppCompatActivity {
     TextView email, password;
     private FirebaseAuth mAuth;
     Button button;
-    private PrefrenceManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        prefManager = new PrefrenceManager(this);
         email = findViewById(R.id.editTextTextEmailAddress2);
         password = findViewById(R.id.editTextTextPassword);
         button = findViewById(R.id.button);

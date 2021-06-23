@@ -7,7 +7,7 @@ TheVoice is a platform that bridges the communication gap between the Government
 
 Here's a demo explaining how the app works. https://youtu.be/04sUan46_KY
 
-Live link here - 
+Live link here - https://drive.google.com/file/d/1ldTNHxncxi4YplJj1kmdFHXkb3o3jhp4/view?usp=sharing
 
 ## Technologies
 

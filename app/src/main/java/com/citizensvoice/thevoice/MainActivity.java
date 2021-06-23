@@ -12,11 +12,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -25,7 +33,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final static String API_KEY_FROM_DEV_PORTAL = "ceaa2a038af2c038c2060fb8048451952364e1f4365124e0e7fc700951bc7c29";
+    public final static String API_KEY_FROM_DEV_PORTAL = "5d26dbea29f5ca944e76a5f8d087e2914d6a7a94412f1effb3f0cb761440ce7e";
     Button airtime, chimoney;
     EditText email;
     @Override
@@ -35,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         airtime = findViewById(R.id.ar);
         chimoney = findViewById(R.id.ch);
-
-        email = findViewById(R.id.editTextTextEmailAddress);
+        email = findViewById(R.id.editTextTextEmailAddress2);
 
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -57,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             String val = getLocalAmt(client, "20");
-                            send_chimoney(val, email.toString());
+                            send_chimoney(val, "akinremibunmi111@gmail.com");
                         } catch (IOException e) {
                             e.printStackTrace();
-                        } catch (JSONException e) {
+                        } catch (JSONException | UnirestException e) {
                             e.printStackTrace();
                         }
                     }
@@ -87,6 +94,59 @@ public class MainActivity extends AppCompatActivity {
         return amt;
     }
 
+
+
+    public void send_chimoney(String amt, String email) throws IOException, JSONException, UnirestException {
+        JSONArray val = new JSONArray();
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("email", "akinremibunmi111@gmail.com");
+        val.put(jsonObject1);
+        jsonObject1 = new JSONObject();
+        jsonObject1.put("value", "1");
+        val.put(jsonObject1);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("chimoneys", val);
+
+       /* Unirest.setTimeouts(0, 0);
+        HttpResponse<String> response = Unirest.post("https://chimoney.io/api/v0.1/payouts/chimoney")
+                .header("X-API-Key", API_KEY_FROM_DEV_PORTAL)
+                .body(jsonObject)
+                .asString();
+        Log.e("response ", "onResponse(): " + response);
+        String responseData = response.getBody();
+        Log.e("response ", "onResponse(): " + responseData);
+        // Log.i("Main Activity", "value")
+        JSONObject json = new JSONObject(responseData);
+        JSONObject json1 = json.getJSONObject("data");
+        JSONArray json2 = json1.getJSONArray("data");
+        String url = json2.getString(-1);
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
+        */
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+       // MediaType mediaType = MediaType.parse("text/plain");
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, val.toString());
+        //RequestBody body = RequestBody.create(mediaType, "{\n    \"chimoneys\": [\n        {\n            \"email\": \"akinremibunmi111@gmail.com\",\n            \"valueInUSD\": 1\n        }");
+        Request request = new Request.Builder()
+                .url("https://chimoney.io/api/v0.1/payouts/chimoney")
+                .post(body)
+                .addHeader("X-API-Key", API_KEY_FROM_DEV_PORTAL)
+                .build();
+        Response response = client.newCall(request).execute();
+        Log.e("response ", "onResponse(): " + response);
+        String responseData = response.body().toString();
+        Log.e("response ", "onResponse(): " + responseData);
+        JSONObject json = new JSONObject(responseData);
+        JSONObject json1 = json.getJSONObject("data");
+        JSONArray json2 = json1.getJSONArray("data");
+        String url = json2.getString(-1);
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
+
+    }
     public void sendAirtime(OkHttpClient client, String amt, String phone_num){
         MediaType mediaType = MediaType.parse("text/plain");
         RequestBody body = RequestBody.create(mediaType, "{\n    \"airtimes\": [\n        {\n            \"countryToSend\": \"Nigeria\",\n            \"phoneNumber\": \""+phone_num+"\",\n            \"valueInUSD\": "+amt+"\n        }");
@@ -100,29 +160,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void send_chimoney(String amt, String email) throws IOException, JSONException {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        MediaType mediaType = MediaType.parse("text/plain");
-        RequestBody body = RequestBody.create(mediaType, "{\n    \"chimoneys\": [\n        {\n            \"email\": \""+email+"\",\n            \"valueInUSD\": "+amt+"\n        }");
-        Request request = new Request.Builder()
-                .url("https://chimoney.io/api/v0.1/payouts/chimoney")
-                .method("POST", body)
-                .addHeader("X-API-Key", "API_KEY_FROM_DEV_PORTAL")
-                .build();
-        Response response = client.newCall(request).execute();
-        String responseData = response.body().string();
-        //Toast.makeText(MainActivity.this, "This"+responseData, Toast.LENGTH_LONG);
-        JSONObject json = new JSONObject(responseData);
-        JSONObject json1 = json.getJSONObject("data");
-        JSONObject json2 = json1.getJSONObject("data");
-        String ref = json2.getString("chiRef"); //"418e7360-35c5-496a-b2b2-3087ba4d2612";//
-        String url = "https://chimoney.io/redeem?chi="+ref;
-       // sendEmail(url, email);
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        startActivity(browserIntent);
     }
     public void sendEmail(String url, String to){
         String subject="You've got some chimoney from TheVoice";
