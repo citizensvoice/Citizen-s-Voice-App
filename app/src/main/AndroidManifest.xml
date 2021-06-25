@@ -11,18 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewPoll"></activity>
-        <activity android:name=".Home" />
-        <activity android:name=".Login">
+        <activity android:name=".SignUp" android:theme="@style/AppTheme1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".ViewPoll" android:label="Projects" />
+        <activity android:name=".Home" android:label="Home"/>
+        <activity android:name=".Login" android:theme="@style/AppTheme1">
 
         </activity>
+        <activity android:name=".MainActivity" android:label="Rewards"></activity>
     </application>
 
 </manifest>

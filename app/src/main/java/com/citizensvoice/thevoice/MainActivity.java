@@ -12,9 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -58,22 +55,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Thread thread = new Thread(new Runnable() {
+                send();
+              /*  Thread thread = new Thread(new Runnable() {
 
                     @Override
                     public void run() {
                         try {
-                            String val = getLocalAmt(client, "20");
-                            send_chimoney(val, "akinremibunmi111@gmail.com");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (JSONException | UnirestException e) {
+                            //String val = getLocalAmt(client, "20");
+                            send_chimoney();
+                        } catch (IOException | JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 });
 
-                thread.start();
+                thread.start();*/
             }
         });
 
@@ -95,9 +91,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void send(){
+        String url = "";
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
+    }
 
-    public void send_chimoney(String amt, String email) throws IOException, JSONException, UnirestException {
-        JSONArray val = new JSONArray();
+    public void send_chimoney() throws IOException, JSONException {
+        /*JSONArray val = new JSONArray();
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("email", "akinremibunmi111@gmail.com");
         val.put(jsonObject1);
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         val.put(jsonObject1);
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("chimoneys", val);
+        jsonObject.put("chimoneys", val);*/
 
        /* Unirest.setTimeouts(0, 0);
         HttpResponse<String> response = Unirest.post("https://chimoney.io/api/v0.1/payouts/chimoney")
@@ -126,15 +127,16 @@ public class MainActivity extends AppCompatActivity {
         */
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
-       // MediaType mediaType = MediaType.parse("text/plain");
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, val.toString());
-        //RequestBody body = RequestBody.create(mediaType, "{\n    \"chimoneys\": [\n        {\n            \"email\": \"akinremibunmi111@gmail.com\",\n            \"valueInUSD\": 1\n        }");
+        MediaType mediaType = MediaType.parse("text/plain");
+       // MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+       // RequestBody body = RequestBody.create(JSON, val.toString());
+        RequestBody body = RequestBody.create(mediaType, "{\n    \"chimoney\": [\n        {\n            \"email\": \"akinremibunmi111@gmail.com\",\n            \"valueInUSD\": 0.5\n        }");
         Request request = new Request.Builder()
                 .url("https://chimoney.io/api/v0.1/payouts/chimoney")
-                .post(body)
+                .method("POST", body)
                 .addHeader("X-API-Key", API_KEY_FROM_DEV_PORTAL)
                 .build();
+
         Response response = client.newCall(request).execute();
         Log.e("response ", "onResponse(): " + response);
         String responseData = response.body().toString();

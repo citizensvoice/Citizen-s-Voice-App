@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,73 +21,114 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Login extends AppCompatActivity {
-    TextView email, password;
-    private FirebaseAuth mAuth;
-    Button button;
+import java.util.List;
 
+public class Login extends AppCompatActivity {
+    EditText email, password;
+    private FirebaseAuth mAuth;
+    Button signin;
+    TextView forgotPassword, register;
+    FirebaseAuth auth;
+    String Email, Password;
+    PrefrenceManager prefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        // Checking for first time launch - before calling setContentView()
+        //prefManager = new PrefrenceManager(this);
+        //if (!prefManager.isFirstTimeLaunch()) {
+        //    launchHomeScreen();
+        //    finish();
+       // }
         email = findViewById(R.id.editTextTextEmailAddress2);
         password = findViewById(R.id.editTextTextPassword);
-        button = findViewById(R.id.button);
+        forgotPassword = findViewById(R.id.textView33);
+        register = findViewById(R.id.textView5);
+        signin = findViewById(R.id.button);
         mAuth = FirebaseAuth.getInstance();
+
+         Email = email.getText().toString();
+         Password = password.getText().toString();
+
+
+
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Signin();
+            }
+        });
+        forgotPassword.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(final View v) {
+                forgotPassword();
+            }
+        });
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, SignUp.class));
+            }
+        });
     }
+    private void launchHomeScreen() {
+        prefManager.setFirstTimeLaunch(false);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null){
+            startActivity(new Intent(Login.this, Home.class));
+            finish();
+        }
 
-    private boolean validate(){
-        boolean isValid=false;
-
-        String user_email = email.getText().toString();
-        String user_password = password.getText().toString();
-
-        if (TextUtils.isEmpty(user_email)) {
-            email.setError("Please enter email");
+    }
+    public void Signin(){
+        if (TextUtils.isEmpty(Email)){
+            email.setError("Please enter your email");
             email.requestFocus();
-        } else if (TextUtils.isEmpty(user_password)) {
+        }
+        else if (TextUtils.isEmpty(Password)){
             password.setError("Please enter your password");
             password.requestFocus();
         }
-        else
-            isValid=true;
-        return isValid;
-    }
-
-    private void addCLicklistener(){
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(validate())
-                    registerUserToDatabse(email.getText().toString(), password.getText().toString());
-            }
-        });
-
-    }
-    private void registerUserToDatabse(final String user_email, String user_password) {
-
-        try {
-            mAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
+        else if (Email.isEmpty() && Password.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Fields are Empty!", Toast.LENGTH_SHORT).show();
+        }
+        else if (Email.isEmpty() && Password.isEmpty()){
+            auth.signInWithEmailAndPassword(Email, Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    Toast.makeText(Login.this, "Succesfully created user::email is:" + task.getResult().getUser().getEmail(), Toast.LENGTH_SHORT).show();
-                    addUserInDatabse(task.getResult().getUser(), user_email);
+                    if (task.isSuccessful()){
+                     //   prefManager.storeUserID(task.getResult().getUser().getUid());
+                        Toast.makeText(getApplicationContext(), ""+"Success!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Login.this, Home.class));
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), ""+"Unsuccessful. Try Again", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
-        } catch (Exception e) {
-            Toast.makeText(Login.this, "Please connect to the internet", Toast.LENGTH_SHORT).show();
-
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Error occurred!", Toast.LENGTH_SHORT).show();
         }
     }
-    private void addUserInDatabse(final FirebaseUser firebaseUser, String user_email){
 
-        String user_type = "citizen";
-        User user= new User(user_type, user_email,firebaseUser.getUid());
-        FirebaseDatabase.getInstance().getReference().child("all_users").child("citizen")
-                .child(firebaseUser.getUid()).setValue(user);
-        Toast.makeText(Login.this, "Succesfully added !", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(Login.this, Home.class));
-
+    public void forgotPassword(){
+        if (TextUtils.isEmpty(Email)){
+            email.requestFocus();
+        }
+        auth.sendPasswordResetEmail(Email).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "An Email Sent To You", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), ""+"Email could not be sent.Try Again", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
+
+
 }

@@ -12,6 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Title"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,6 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Description"
+        android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toTopOf="@+id/guideline18" />
@@ -58,7 +62,7 @@
         android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginTop="8dp"
-        android:text="TextViewyfdrxmv,jn;logif87dtxcjhbnog;876dcv.jbhiuydkhbnlm;lnuyctggdtufykj"
+        android:text="TextViewyfdrxmv,jn;logif87dtxcjhbnog;876dcv.jbhiuydkhbnlm;lnuycsxfhcvuhyk6u5srurxjhgvbykfdrteazjxchgmbvlugyf564esutjrhcvhlfydireazjfxcbvyure5eazdxfgnvbntggdtufykj"
         app:layout_constraintEnd_toStartOf="@+id/guideline14"
         app:layout_constraintStart_toStartOf="@+id/guideline13"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -68,6 +72,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="More Images"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toTopOf="@+id/guideline19" />
 
@@ -77,7 +83,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline15"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/textView14"
+        tools:listitem="@layout/view_item" />
 
     <TextView
         android:id="@+id/textView15"
@@ -91,22 +98,15 @@
 
     <EditText
         android:id="@+id/editTextTextPersonName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
+        app:layout_constraintEnd_toStartOf="@+id/guideline15"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Vote the project * 2 points"
-        app:layout_constraintStart_toStartOf="@+id/guideline12"
-        app:layout_constraintTop_toTopOf="@+id/guideline16" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline12"
@@ -140,20 +140,19 @@
         android:id="@+id/button2"
         android:layout_width="113dp"
         android:layout_height="37dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/ic_loginbtn"
+        android:background="@drawable/ic_btnbg"
         android:text="Submit"
         android:textColor="@android:color/white"
-        android:textSize="19sp"
-        app:layout_constraintTop_toTopOf="@+id/guideline16"
-        tools:layout_editor_absoluteX="282dp" />
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline15"
+        app:layout_constraintTop_toTopOf="@+id/guideline16" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="81dp" />
+        app:layout_constraintGuide_end="38dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline17"
@@ -188,6 +187,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1,000 votes"
-        tools:layout_editor_absoluteX="308dp"
-        tools:layout_editor_absoluteY="165dp" />
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toStartOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/guideline17" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vote"
+        app:layout_constraintStart_toStartOf="@+id/guideline13"
+        app:layout_constraintTop_toTopOf="@+id/guideline16" />
 </androidx.constraintlayout.widget.ConstraintLayout>
