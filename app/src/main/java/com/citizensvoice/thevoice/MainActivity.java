@@ -56,20 +56,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 send();
-              /*  Thread thread = new Thread(new Runnable() {
+               Thread thread = new Thread(new Runnable() {
 
                     @Override
                     public void run() {
                         try {
-                            //String val = getLocalAmt(client, "20");
-                            send_chimoney();
+                            String val = getLocalAmt(client, "20");
+                            send_chimoney(email.getText().toString(), val);
                         } catch (IOException | JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 });
 
-                thread.start();*/
+                thread.start();
             }
         });
 
@@ -92,13 +92,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void send(){
-        String url = "";
+        String url = "https://chimoney.io/redeem?chi=5675e9a0-961c-488e-b64e-62f4a3d9e34b";
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
     }
 
-    public void send_chimoney() throws IOException, JSONException {
-        /*JSONArray val = new JSONArray();
+    public void send_chimoney(String email, String amt) throws IOException, JSONException {
+        JSONArray val = new JSONArray();
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("email", "akinremibunmi111@gmail.com");
         val.put(jsonObject1);
@@ -107,30 +107,14 @@ public class MainActivity extends AppCompatActivity {
         val.put(jsonObject1);
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("chimoneys", val);*/
+        jsonObject.put("chimoneys", val);
 
-       /* Unirest.setTimeouts(0, 0);
-        HttpResponse<String> response = Unirest.post("https://chimoney.io/api/v0.1/payouts/chimoney")
-                .header("X-API-Key", API_KEY_FROM_DEV_PORTAL)
-                .body(jsonObject)
-                .asString();
-        Log.e("response ", "onResponse(): " + response);
-        String responseData = response.getBody();
-        Log.e("response ", "onResponse(): " + responseData);
-        // Log.i("Main Activity", "value")
-        JSONObject json = new JSONObject(responseData);
-        JSONObject json1 = json.getJSONObject("data");
-        JSONArray json2 = json1.getJSONArray("data");
-        String url = json2.getString(-1);
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        startActivity(browserIntent);
-        */
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
-        MediaType mediaType = MediaType.parse("text/plain");
-       // MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-       // RequestBody body = RequestBody.create(JSON, val.toString());
-        RequestBody body = RequestBody.create(mediaType, "{\n    \"chimoney\": [\n        {\n            \"email\": \"akinremibunmi111@gmail.com\",\n            \"valueInUSD\": 0.5\n        }");
+        //MediaType mediaType = MediaType.parse("text/plain");
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, val.toString());
+       // RequestBody body = RequestBody.create(mediaType, "{\n    \"chimoney\": [\n        {\n            \"email\": \""+email+"\",\n            \"valueInUSD\": "+amt+"\n        }");
         Request request = new Request.Builder()
                 .url("https://chimoney.io/api/v0.1/payouts/chimoney")
                 .method("POST", body)

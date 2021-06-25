@@ -19,20 +19,24 @@
 
     <Button
         android:id="@+id/ar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="162dp"
+        android:layout_height="54dp"
         android:layout_marginStart="28dp"
+        android:background="@drawable/ic_imgmain"
         android:text="Redeem as airtime"
+        android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <Button
         android:id="@+id/ch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="162dp"
+        android:layout_height="54dp"
         android:layout_marginStart="29dp"
         android:layout_marginTop="18dp"
+        android:background="@drawable/ic_imgmain"
         android:text="Redeem As Chimoney"
+        android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ar" />
 
@@ -45,8 +49,8 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="380dp"
-        android:layout_height="201dp"
+        android:layout_width="345dp"
+        android:layout_height="180dp"
         android:layout_marginTop="43dp"
         android:background="@color/colorPrimary"
         android:elevation="5dp"
@@ -64,13 +68,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Share"
-        app:layout_constraintTop_toTopOf="@+id/guideline21"
-        tools:layout_editor_absoluteX="186dp" />
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline21" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="466dp" />
+        app:layout_constraintGuide_begin="485dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

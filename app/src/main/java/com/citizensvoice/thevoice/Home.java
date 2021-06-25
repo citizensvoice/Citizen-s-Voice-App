@@ -21,7 +21,7 @@ public class Home extends AppCompatActivity {
         recyclerView2 = findViewById(R.id.rv2);
         getItems();
         getItemsa();
-        //getItemsb();
+        getItemsb();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class Home extends AppCompatActivity {
         String[] names = {"Eko Atlantic", "Lagos Light Rail", "World Trade Centre", "Abuja Millennium Tower", "1400 MW Gas Turbine"};
         int[] ids = {R.drawable.abt_a, R.drawable.ea_a, R.drawable.gtps_a,
                 R.drawable.lftz_a, R.drawable.llr_a, R.drawable.wtc_a};
-        String[] prices = {"1500", "1600", "4000", "1700", "1200"};
+        String[] prices = {"1500 votes", "1600 votes", "4000 votes", "1700 votes", "1200 votes"};
 
         CustomAdapter customAdapter = new CustomAdapter(Home.this, ids, names, prices);
         recyclerView.setHasFixedSize(true);
@@ -47,7 +47,7 @@ public class Home extends AppCompatActivity {
         String[] names = {"Eko Atlantic", "Lagos Light Rail", "World Trade Centre", "Abuja Millennium Tower", "1400 MW Gas Turbine"};
         int[] ids = {R.drawable.abt_b, R.drawable.ea_b, R.drawable.gtps_b,
                 R.drawable.lftz_b, R.drawable.llr_b, R.drawable.wtc_b};
-        String[] prices = {"1500", "1600", "4000", "1700", "1200"};
+        String[] prices = {"1500 votes", "1600 votes", "4000 votes", "1700 votes", "1200 votes"};
 
         CustomAdapter customAdapter = new CustomAdapter(Home.this, ids, names, prices);
         recyclerView1.setHasFixedSize(true);
@@ -57,10 +57,12 @@ public class Home extends AppCompatActivity {
     }
 
     private void getItemsb() {
-        String[] names = {"New Policy 1", "New Policy 2", "New Policy 3", "New Policy 4"};
-        int[] ids = {R.drawable.policy, R.drawable.policy, R.drawable.llr_b, R.drawable.wtc_b};
+        String[] names = {"Eko Atlantic", "Lagos Light Rail", "World Trade Centre", "Abuja Millennium Tower", "1400 MW Gas Turbine"};
+        int[] ids = {R.drawable.abt_b, R.drawable.ea_b, R.drawable.gtps_b,
+                R.drawable.lftz_b, R.drawable.llr_b, R.drawable.wtc_b};
+        String[] prices = {"1500 votes", "1600 votes", "4000 votes", "1700 votes", "1200 votes"};
 
-        CustomAdapterA customAdapter = new CustomAdapterA(Home.this, ids, names);
+        CustomAdapter customAdapter = new CustomAdapter(Home.this, ids, names, prices);
         recyclerView2.setHasFixedSize(true);
         recyclerView2.setLayoutManager(new LinearLayoutManager(Home.this, LinearLayoutManager.HORIZONTAL,
                 false));

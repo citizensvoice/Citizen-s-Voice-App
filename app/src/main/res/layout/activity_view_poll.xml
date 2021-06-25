@@ -78,6 +78,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline19" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="0dp"
         android:layout_height="119dp"
         android:layout_marginTop="8dp"
@@ -188,6 +189,7 @@
         android:layout_height="wrap_content"
         android:text="1,000 votes"
         android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline14"
         app:layout_constraintTop_toTopOf="@+id/guideline17" />
 
@@ -195,7 +197,8 @@
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:text="Vote"
         app:layout_constraintStart_toStartOf="@+id/guideline13"
-        app:layout_constraintTop_toTopOf="@+id/guideline16" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

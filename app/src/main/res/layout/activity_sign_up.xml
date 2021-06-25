@@ -10,7 +10,7 @@
         android:id="@+id/button3"
         android:layout_width="167dp"
         android:layout_height="53dp"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="32sp"
         android:background="@drawable/ic_btnbg"
         android:text="Sign Up"
         android:textColor="@android:color/white"
